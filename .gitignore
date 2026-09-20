@@ -1,0 +1,73 @@
+# APEX — .gitignore
+# Never commit secrets, generated files, or personal data
+
+# ── Secrets & credentials ─────────────────────────────────────
+.apex_config
+client_secrets.json
+youtube_token.json
+*.env
+.env.*
+*_secret*
+*_credentials*
+
+# ── Generated output (too large for git) ─────────────────────
+output/
+audio_cache/
+art/
+clips/
+shorts/
+manim_scenes/media/
+screenshots/
+browser_profile/
+backups/
+
+# ── Database (personal data) ──────────────────────────────────
+apex_data.db
+*.db
+*.sqlite
+
+# ── Python ────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv/
+pip-wheel-metadata/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ── Node (if ever added) ──────────────────────────────────────
+node_modules/
+npm-debug.log*
+
+# ── OS files ──────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ── IDE ───────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── Logs ──────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── Preview / temp ────────────────────────────────────────────
+previews/
+*.tmp
+*.temp
