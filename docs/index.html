@@ -1,1 +1,443 @@
-https://claude.ai/artifact/PEJY5EFLfi1MGBx7HBzq6G
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>APEX — AI YouTube Content Agent</title>
+<meta name="description" content="The world's first fully autonomous AI YouTube pipeline. From topic to upload, fully automated. Built with Python, Flask, and multi-provider AI.">
+<meta property="og:title" content="APEX — AI YouTube Content Agent">
+<meta property="og:description" content="Autonomous AI that writes scripts, generates videos, and uploads to YouTube. Free tier + paid animation tiers.">
+<meta property="og:type" content="website">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#03080f;--surface:#060d1a;--card:#0a1628;
+  --teal:#00d4ff;--gold:#ffd700;--green:#00e676;--red:#ff4757;--purple:#a855f7;
+  --text:#e8f4ff;--dim:#4a7a9b;
+}
+body{font-family:-apple-system,'Segoe UI',Inter,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+a{color:var(--teal);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(3,8,15,0.95);border-bottom:1px solid rgba(0,180,255,0.12);padding:14px 24px;display:flex;align-items:center;gap:20px;backdrop-filter:blur(12px)}
+.nav-logo{font-size:18px;font-weight:800;background:linear-gradient(135deg,var(--teal),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;gap:20px;margin-left:auto;font-size:13px}
+.nav-links a{color:var(--dim);transition:color .2s}
+.nav-links a:hover{color:var(--teal);text-decoration:none}
+.nav-cta{background:linear-gradient(135deg,var(--teal),#0088cc);color:#000!important;font-weight:700;padding:7px 16px;border-radius:7px}
+.nav-cta:hover{opacity:.9;text-decoration:none!important}
+
+/* HERO */
+.hero{min-height:90vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px 60px;position:relative;overflow:hidden}
+.hero-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,0.08) 0%,rgba(168,85,247,0.04) 40%,transparent 70%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:20px;padding:6px 16px;font-size:12px;font-weight:600;color:var(--teal);margin-bottom:28px}
+.hero h1{font-size:clamp(36px,7vw,72px);font-weight:900;line-height:1.1;margin-bottom:20px;letter-spacing:-1px}
+.hero h1 span{background:linear-gradient(135deg,var(--teal),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:clamp(16px,2.5vw,22px);color:var(--dim);max-width:680px;margin:0 auto 36px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:60px}
+.btn-primary{background:linear-gradient(135deg,var(--teal),#0088cc);color:#000;font-weight:700;font-size:15px;padding:14px 28px;border-radius:10px;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,212,255,0.35);text-decoration:none;color:#000}
+.btn-secondary{background:transparent;border:1px solid rgba(0,212,255,0.3);color:var(--teal);font-weight:600;font-size:15px;padding:14px 28px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+.btn-secondary:hover{border-color:var(--teal);background:rgba(0,212,255,0.06);transform:translateY(-2px);text-decoration:none;color:var(--teal)}
+.hero-stats{display:flex;gap:40px;flex-wrap:wrap;justify-content:center}
+.hero-stat .num{font-size:32px;font-weight:800;color:var(--teal);display:block}
+.hero-stat .lbl{font-size:12px;color:var(--dim)}
+
+/* BADGES */
+.badges{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:40px}
+.badge{font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;border:1px solid}
+.badge-teal{background:rgba(0,212,255,0.1);border-color:rgba(0,212,255,0.3);color:var(--teal)}
+.badge-gold{background:rgba(255,215,0,0.1);border-color:rgba(255,215,0,0.3);color:var(--gold)}
+.badge-green{background:rgba(0,230,118,0.1);border-color:rgba(0,230,118,0.3);color:var(--green)}
+.badge-purple{background:rgba(168,85,247,0.1);border-color:rgba(168,85,247,0.3);color:var(--purple)}
+
+/* SECTIONS */
+section{padding:80px 24px;max-width:1100px;margin:0 auto}
+.section-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
+.section-title{font-size:clamp(28px,5vw,44px);font-weight:800;margin-bottom:16px;line-height:1.2}
+.section-sub{font-size:16px;color:var(--dim);max-width:640px;margin-bottom:48px}
+.divider{border:none;border-top:1px solid rgba(0,180,255,0.1);margin:0}
+
+/* PIPELINE */
+.pipeline{display:flex;flex-direction:column;gap:0;max-width:700px;margin:0 auto}
+.pipe-step{display:flex;align-items:flex-start;gap:20px;padding:20px 0;position:relative}
+.pipe-step:not(:last-child)::after{content:'';position:absolute;left:19px;top:52px;bottom:0;width:1px;background:linear-gradient(180deg,rgba(0,212,255,0.4),rgba(0,212,255,0.1))}
+.pipe-icon{width:40px;height:40px;border-radius:10px;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.25);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.pipe-content h3{font-size:15px;font-weight:700;margin-bottom:4px}
+.pipe-content p{font-size:13px;color:var(--dim);line-height:1.5}
+
+/* GRID */
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.g4{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid rgba(0,180,255,0.1);border-radius:12px;padding:24px;transition:border-color .2s,transform .2s}
+.card:hover{border-color:rgba(0,212,255,0.3);transform:translateY(-3px)}
+.card-icon{font-size:28px;margin-bottom:14px}
+.card h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.card p{font-size:13px;color:var(--dim);line-height:1.6}
+.card-highlight{background:linear-gradient(135deg,rgba(0,212,255,0.06),rgba(168,85,247,0.04));border-color:rgba(0,212,255,0.2)}
+
+/* TIERS */
+.tier-card{border-radius:12px;padding:24px;border:1px solid;margin-bottom:16px}
+.tier-free{background:rgba(0,230,118,0.04);border-color:rgba(0,230,118,0.2)}
+.tier-paid{background:rgba(255,215,0,0.04);border-color:rgba(255,215,0,0.2)}
+.tier-always{background:rgba(0,212,255,0.04);border-color:rgba(0,212,255,0.2)}
+.tier-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.tier-header h3{font-size:18px;font-weight:700;flex:1}
+.tier-badge{font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px}
+.tier-desc{font-size:14px;color:var(--dim);margin-bottom:14px}
+.tier-features{list-style:none;display:flex;flex-direction:column;gap:6px}
+.tier-features li{font-size:13px;color:var(--dim);display:flex;align-items:center;gap:8px}
+.tier-features li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
+.tier-features li.warn::before{content:'!';color:var(--gold)}
+
+/* CODE BLOCK */
+pre{background:rgba(0,0,0,0.5);border:1px solid rgba(0,180,255,0.15);border-radius:10px;padding:20px;overflow-x:auto;font-family:'Fira Mono','Consolas',monospace;font-size:13px;line-height:1.7;margin:16px 0}
+code{font-family:'Fira Mono','Consolas',monospace;font-size:13px;color:var(--teal)}
+pre code{color:var(--text)}
+.comment{color:var(--dim)}
+.keyword{color:var(--purple)}
+.string{color:var(--green)}
+
+/* STAT SECTION */
+.big-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:20px;margin:40px 0}
+.big-stat{text-align:center;padding:24px 12px;background:var(--card);border:1px solid rgba(0,180,255,0.1);border-radius:12px}
+.big-stat .n{font-size:36px;font-weight:900;line-height:1;margin-bottom:6px}
+.big-stat .l{font-size:12px;color:var(--dim)}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;margin:20px 0}
+th{text-align:left;padding:10px 14px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--dim);border-bottom:1px solid rgba(0,180,255,0.15)}
+td{padding:12px 14px;font-size:13px;border-bottom:1px solid rgba(0,180,255,0.07)}
+tr:hover td{background:rgba(0,212,255,0.03)}
+
+/* ROADMAP */
+.roadmap-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid rgba(0,180,255,0.07)}
+.roadmap-item:last-child{border-bottom:none}
+.rm-status{width:60px;flex-shrink:0;font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;text-align:center;height:fit-content;margin-top:2px}
+.rm-done{background:rgba(0,230,118,0.1);color:var(--green)}
+.rm-next{background:rgba(0,212,255,0.1);color:var(--teal)}
+.rm-future{background:rgba(168,85,247,0.1);color:var(--purple)}
+.roadmap-item h4{font-size:14px;font-weight:600;margin-bottom:4px}
+.roadmap-item p{font-size:12px;color:var(--dim)}
+
+/* CTA SECTION */
+.cta-section{background:linear-gradient(135deg,rgba(0,212,255,0.06),rgba(168,85,247,0.04));border:1px solid rgba(0,212,255,0.15);border-radius:20px;padding:60px 40px;text-align:center;margin:80px auto;max-width:800px}
+.cta-section h2{font-size:clamp(28px,5vw,42px);font-weight:800;margin-bottom:16px}
+.cta-section p{font-size:16px;color:var(--dim);margin-bottom:32px;max-width:560px;margin-left:auto;margin-right:auto}
+
+/* FOOTER */
+footer{background:var(--surface);border-top:1px solid rgba(0,180,255,0.1);padding:40px 24px;text-align:center;color:var(--dim);font-size:13px}
+footer .footer-logo{font-size:22px;font-weight:800;background:linear-gradient(135deg,var(--teal),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  .hero-stats{gap:24px}
+  .nav-links{display:none}
+  .hero-btns{flex-direction:column;align-items:center}
+  section{padding:60px 16px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">⚡ APEX</div>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#pipeline">Pipeline</a>
+    <a href="#animation">Animation</a>
+    <a href="#setup">Setup</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="https://github.com/sachiii143/apex-youtube-agent" class="nav-cta">⭐ Star on GitHub</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">🤖 Agentic AI · Open Source · Production Ready</div>
+
+  <div class="badges">
+    <span class="badge badge-teal">Python 3.10+</span>
+    <span class="badge badge-teal">Flask</span>
+    <span class="badge badge-gold">DeepSeek / Gemini / Groq</span>
+    <span class="badge badge-green">29 Python files</span>
+    <span class="badge badge-green">79 API routes</span>
+    <span class="badge badge-purple">20/20 Tests Passing</span>
+    <span class="badge badge-teal">MIT License</span>
+  </div>
+
+  <h1>The AI That Runs<br><span>Your YouTube Channel</span></h1>
+  <p>APEX is a fully autonomous AI agent that writes scripts, generates videos, uploads to YouTube, tracks analytics, and improves — all without manual work.</p>
+
+  <div class="hero-btns">
+    <a href="https://github.com/sachiii143/apex-youtube-agent" class="btn-primary">
+      ⬇ Download on GitHub
+    </a>
+    <a href="#pipeline" class="btn-secondary">
+      📖 See How It Works
+    </a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="num">29</span><span class="lbl">Python Files</span></div>
+    <div class="hero-stat"><span class="num">79</span><span class="lbl">API Routes</span></div>
+    <div class="hero-stat"><span class="num">17</span><span class="lbl">Dashboard Pages</span></div>
+    <div class="hero-stat"><span class="num">20/20</span><span class="lbl">Tests Passing</span></div>
+    <div class="hero-stat"><span class="num">3</span><span class="lbl">Animation Tiers</span></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-label">What APEX does</div>
+  <h2 class="section-title">Everything a YouTube team does — automated</h2>
+  <p class="section-sub">One command starts it. Nova handles the rest.</p>
+
+  <div class="g3">
+    <div class="card card-highlight">
+      <div class="card-icon">✍️</div>
+      <h3>AI Script Writing</h3>
+      <p>LLM writes complete comedy sketches for Trishul, Sandy, and Libhu — original characters you own 100%. Copyright-safe. SEO-optimised titles, tags, and descriptions included.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎬</div>
+      <h3>Video Generation</h3>
+      <p>Generates real .mp4 files — AI cartoon images per scene, voice narration, Ken Burns motion effects, and on-screen captions. Three animation tiers from free to professional.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔒</div>
+      <h3>Approval Gate</h3>
+      <p>Every upload is blocked until you explicitly approve. Payload-locked cards — any metadata change invalidates the approval. 20-point quality gate runs automatically.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📊</div>
+      <h3>Analytics + Improvement</h3>
+      <p>Connects to YouTube Analytics API. Tracks views, CTR, and retention per video. Enhancement engine uses real data to improve the next video automatically.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧠</div>
+      <h3>Nova AI Persona</h3>
+      <p>Conversational AI interface with memory, voice, desktop control, and browser automation. Talk to Nova in real time — she executes tasks immediately.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">⏰</div>
+      <h3>Daily Scheduler</h3>
+      <p>Queues new episodes automatically every morning. Topic pool cycles through your content plan. Enhancement brief applied to each video. You approve every upload.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PIPELINE -->
+<section id="pipeline">
+  <div class="section-label">End-to-end flow</div>
+  <h2 class="section-title">From topic to YouTube in one command</h2>
+  <p class="section-sub">Every step verified by the E2E test suite. All 5 wiring gaps found in external audit — fixed and proven.</p>
+
+  <div class="pipeline">
+    <div class="pipe-step"><div class="pipe-icon">💬</div><div class="pipe-content"><h3>You say: "make a video about X"</h3><p>Nova detects the intent from chat, voice, or hands-free wake word "Hey Nova"</p></div></div>
+    <div class="pipe-step"><div class="pipe-icon">✍️</div><div class="pipe-content"><h3>Script Engine</h3><p>LLM writes 6-7 scene comedy sketch with Trishul, Sandy, Libhu. Copyright scanner blocks any licensed character names automatically.</p></div></div>
+    <div class="pipe-step"><div class="pipe-icon">🎨</div><div class="pipe-content"><h3>Image Engine</h3><p>Pollinations.ai generates cartoon-style AI images per scene. Free, unlimited. Ideogram and Leonardo as paid alternatives.</p></div></div>
+    <div class="pipe-step"><div class="pipe-icon">🎙️</div><div class="pipe-content"><h3>Voice Engine</h3><p>gTTS records narration for each scene. Google WaveNet available for human-quality voice.</p></div></div>
+    <div class="pipe-step"><div class="pipe-icon">🎬</div><div class="pipe-content"><h3>Video Builder</h3><p>MoviePy renders final .mp4 with Ken Burns zoom effects, captions, and audio sync. Manim or Kling AI if installed.</p></div></div>
+    <div class="pipe-step"><div class="pipe-icon">✅</div><div class="pipe-content"><h3>Quality Gate (20 checks)</h3><p>Scene count, narration length, copyright scan, image integrity, video file size — all checked automatically before reaching approval.</p></div></div>
+    <div class="pipe-step"><div class="pipe-icon">🔐</div><div class="pipe-content"><h3>YOUR APPROVAL</h3><p>Approval card shows exact metadata. Payload-locked — any change invalidates it. You click Approve. No upload without this.</p></div></div>
+    <div class="pipe-step"><div class="pipe-icon">📤</div><div class="pipe-content"><h3>YouTube Upload</h3><p>Official YouTube Data API v3. Title, tags, description, thumbnail, visibility, made-for-kids flag all set. Analytics auto-registered.</p></div></div>
+    <div class="pipe-step"><div class="pipe-icon">🔄</div><div class="pipe-content"><h3>Enhancement Loop</h3><p>YouTube Analytics fetched after upload. Enhancement engine generates improvement brief. Next video uses real performance data.</p></div></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ANIMATION TIERS -->
+<section id="animation">
+  <div class="section-label">Animation system</div>
+  <h2 class="section-title">3 tiers — free to professional</h2>
+  <p class="section-sub">APEX auto-selects the best available tier on every run. No manual switching.</p>
+
+  <div class="tier-card tier-always">
+    <div class="tier-header">
+      <div style="font-size:24px">🆓</div>
+      <h3>Tier 1 — Narrated Slideshow</h3>
+      <span class="tier-badge" style="background:rgba(0,230,118,0.12);color:#00e676;border:1px solid rgba(0,230,118,0.25)">ALWAYS ACTIVE · FREE FOREVER</span>
+    </div>
+    <p class="tier-desc">Works immediately with zero setup. AI-generated cartoon images per scene with voice narration and Ken Burns zoom effects.</p>
+    <ul class="tier-features">
+      <li>Pollinations.ai — unlimited free AI image generation</li>
+      <li>gTTS — free voice narration (or Google WaveNet for human quality)</li>
+      <li>Ken Burns motion effects — slow pan and zoom per scene</li>
+      <li>On-screen captions and branded thumbnails</li>
+      <li>Real .mp4 — uploadable to YouTube immediately</li>
+      <li class="warn">Static images — not moving animation</li>
+    </ul>
+  </div>
+
+  <div class="tier-card tier-free">
+    <div class="tier-header">
+      <div style="font-size:24px">🆓</div>
+      <h3>Tier 2 — Manim 2D Animation</h3>
+      <span class="tier-badge" style="background:rgba(0,212,255,0.12);color:#00d4ff;border:1px solid rgba(0,212,255,0.25)">FREE FOREVER · pip install manim</span>
+    </div>
+    <p class="tier-desc">Smooth 2D animated scenes — the same animation engine used by 3Blue1Brown (4M+ subscribers). Free forever, no GPU needed.</p>
+    <ul class="tier-features">
+      <li>Moving characters — Trishul, Sandy, Libhu as animated shapes</li>
+      <li>Speech bubbles, scene transitions, animated text</li>
+      <li>Runs on any laptop — no GPU required</li>
+      <li>Same quality as 3Blue1Brown YouTube channel</li>
+      <li>APEX generates all Manim code automatically</li>
+    </ul>
+    <pre style="margin-top:14px;font-size:12px"><code>pip install manim
+winget install MiKTeX.MiKTeX  <span class="comment"># Windows only</span>
+<span class="comment"># Restart APEX — Manim activates automatically</span></code></pre>
+  </div>
+
+  <div class="tier-card tier-paid">
+    <div class="tier-header">
+      <div style="font-size:24px">💰</div>
+      <h3>Tier 3 — Kling AI / Pika Labs / Runway ML</h3>
+      <span class="tier-badge" style="background:rgba(255,215,0,0.12);color:#ffd700;border:1px solid rgba(255,215,0,0.25)">PAID · ₹1,200-1,500/month · Real cartoon animation</span>
+    </div>
+    <p class="tier-desc">Real animated cartoon clips per scene. Characters actually move. Near Cartoon Network quality. Add one API key to activate.</p>
+    <ul class="tier-features">
+      <li>Real animated clips — characters move naturally</li>
+      <li>5-10 seconds of animation per scene</li>
+      <li>Kling AI — 66 free clips on signup (enough to test ~11 episodes)</li>
+      <li>APEX sends scene descriptions → receives animated .mp4 clips</li>
+      <li>All clips stitched automatically into final video</li>
+    </ul>
+
+    <table style="margin-top:16px">
+      <tr><th>Provider</th><th>Free Trial</th><th>Paid</th><th>Quality</th><th>Get Key</th></tr>
+      <tr><td><strong>Kling AI</strong></td><td>66 free clips</td><td>~₹1,500/mo</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://klingai.com" target="_blank">klingai.com</a></td></tr>
+      <tr><td><strong>Pika Labs</strong></td><td>Free trial</td><td>~₹1,200/mo</td><td>⭐⭐⭐⭐</td><td><a href="https://pika.art" target="_blank">pika.art</a></td></tr>
+      <tr><td><strong>Runway ML</strong></td><td>Free credits</td><td>~₹1,500/mo</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://runwayml.com" target="_blank">runwayml.com</a></td></tr>
+    </table>
+
+    <pre style="margin-top:14px;font-size:12px"><code><span class="comment"># In APEX dashboard → Settings → API Keys</span>
+KLING_API_KEY = <span class="string">"your-kling-key-here"</span>
+<span class="comment"># Save → APEX uses Kling on every future video automatically</span></code></pre>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SETUP -->
+<section id="setup">
+  <div class="section-label">Quick start</div>
+  <h2 class="section-title">Running in 3 commands</h2>
+  <p class="section-sub">One-shot installer handles everything. Python is the only prerequisite.</p>
+
+  <pre><code><span class="comment"># 1. Clone</span>
+git clone https://github.com/sachiii143/apex-youtube-agent.git
+cd apex-youtube-agent
+
+<span class="comment"># 2. Run one-shot installer</span>
+<span class="comment"># Installs: venv, all packages, ffmpeg, Ollama, Playwright</span>
+<span class="comment"># Asks for: free API keys, YouTube OAuth (guided)</span>
+PowerShell -ExecutionPolicy Bypass -File "run_nova.ps1"
+
+<span class="comment"># 3. Browser opens at http://127.0.0.1:5000</span>
+<span class="comment"># Nova greets you by voice. Say "make a video" to start.</span>
+</code></pre>
+
+  <div class="g4" style="margin-top:32px">
+    <div class="big-stat"><div class="n" style="color:var(--teal)">Free</div><div class="l">Base tier cost</div></div>
+    <div class="big-stat"><div class="n" style="color:var(--gold)">2 min</div><div class="l">DeepSeek key setup</div></div>
+    <div class="big-stat"><div class="n" style="color:var(--green)">20 min</div><div class="l">YouTube OAuth (once)</div></div>
+    <div class="big-stat"><div class="n" style="color:var(--purple)">10 sec</div><div class="l">Every future start</div></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- TECH STACK -->
+<section>
+  <div class="section-label">Built with</div>
+  <h2 class="section-title">Technology stack</h2>
+
+  <table>
+    <tr><th>Layer</th><th>Technology</th><th>Purpose</th></tr>
+    <tr><td>Backend</td><td>Python 3.10+ · Flask · Flask-Sock</td><td>API server, job queue, WebSocket push</td></tr>
+    <tr><td>AI Brain</td><td>DeepSeek · Gemini · Groq · Ollama</td><td>Script writing, chat, decision making</td></tr>
+    <tr><td>Images</td><td>Pollinations.ai · Ideogram · Leonardo</td><td>AI image generation per scene</td></tr>
+    <tr><td>Voice</td><td>gTTS · Google WaveNet · Web Speech</td><td>Narration + TTS output + voice input</td></tr>
+    <tr><td>Video</td><td>MoviePy · Manim · Kling AI · Pika</td><td>3-tier animation rendering</td></tr>
+    <tr><td>YouTube</td><td>YouTube Data API v3 · OAuth2</td><td>Upload, analytics, thumbnails</td></tr>
+    <tr><td>Desktop</td><td>pyautogui · Playwright · Pillow</td><td>Screenshot, mouse control, browser</td></tr>
+    <tr><td>Database</td><td>SQLite (WAL mode)</td><td>Memory, jobs, analytics, audit log</td></tr>
+    <tr><td>Frontend</td><td>Vanilla JS · CSS custom properties</td><td>17-page dashboard, no framework needed</td></tr>
+    <tr><td>Tests</td><td>unittest · E2E integration tests</td><td>20 tests covering full pipeline</td></tr>
+  </table>
+</section>
+
+<hr class="divider">
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="section-label">What's next</div>
+  <h2 class="section-title">Roadmap</h2>
+
+  <div class="card" style="padding:8px 20px">
+    <div class="roadmap-item"><span class="rm-status rm-done">v1.0</span><div><h4>Full YouTube pipeline</h4><p>Script → Video → Upload → Analytics → Improvement loop. 29 files, 79 routes, 20/20 tests.</p></div></div>
+    <div class="roadmap-item"><span class="rm-status rm-done">v1.0</span><div><h4>3-tier animation system</h4><p>Narrated slideshow (free) + Manim 2D (free) + Kling/Pika/Runway (paid)</p></div></div>
+    <div class="roadmap-item"><span class="rm-status rm-done">v1.0</span><div><h4>Nova AI persona</h4><p>Memory, voice, hands-free wake word, desktop control, browser automation</p></div></div>
+    <div class="roadmap-item"><span class="rm-status rm-next">v1.1</span><div><h4>NEXUS — Affiliate Marketing Agent</h4><p>ClickBank, CJ, Digi24 integration. Auto-select niche, generate content, post to all social platforms. Market Mirror Loop — competitor intelligence.</p></div></div>
+    <div class="roadmap-item"><span class="rm-status rm-next">v1.1</span><div><h4>YouTube Shorts auto-generation</h4><p>Extract best scenes from each video, crop 9:16, add captions, upload as Shorts</p></div></div>
+    <div class="roadmap-item"><span class="rm-status rm-next">v1.1</span><div><h4>Multi-client channel management</h4><p>Manage multiple YouTube channels from one dashboard. Client reporting export.</p></div></div>
+    <div class="roadmap-item"><span class="rm-status rm-future">v2.0</span><div><h4>Full character animation</h4><p>Lip-synced Trishul, Sandy, Libhu with rigged models. True cartoon quality at scale.</p></div></div>
+    <div class="roadmap-item"><span class="rm-status rm-future">v2.0</span><div><h4>Multi-language support</h4><p>Tamil, Hindi, English content generation. Regional market targeting.</p></div></div>
+    <div class="roadmap-item"><span class="rm-status rm-future">v2.0</span><div><h4>SaaS packaging</h4><p>Deploy APEX as a hosted service. Client onboarding, billing, multi-tenant architecture.</p></div></div>
+  </div>
+</section>
+
+<!-- AUTHOR -->
+<section style="text-align:center;padding:60px 24px 0">
+  <div style="display:inline-flex;align-items:center;gap:20px;background:#0a1628;border:1px solid rgba(0,212,255,0.2);border-radius:16px;padding:24px 36px;flex-wrap:wrap;justify-content:center">
+    <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#00d4ff,#0088cc,#ffd700);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:#000;flex-shrink:0">S</div>
+    <div style="text-align:left">
+      <div style="font-size:11px;color:#4a7a9b;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px">Built by</div>
+      <div style="font-size:22px;font-weight:800;background:linear-gradient(135deg,#00d4ff,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Sachin.M</div>
+      <div style="font-size:12px;color:#4a7a9b;margin-top:3px">AI Developer · YouTube Automation · Agentic Systems</div>
+    </div>
+    <div style="width:1px;height:50px;background:rgba(0,180,255,0.15);flex-shrink:0"></div>
+    <div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center">
+      <div style="text-align:center"><div style="font-size:22px;font-weight:800;color:#00d4ff">29</div><div style="font-size:11px;color:#4a7a9b">Python Files</div></div>
+      <div style="text-align:center"><div style="font-size:22px;font-weight:800;color:#ffd700">79</div><div style="font-size:11px;color:#4a7a9b">API Routes</div></div>
+      <div style="text-align:center"><div style="font-size:22px;font-weight:800;color:#00e676">20/20</div><div style="font-size:11px;color:#4a7a9b">Tests Pass</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div style="padding:0 24px">
+<div class="cta-section">
+  <h2>Start your autonomous YouTube channel today</h2>
+  <p>Free to use. One command to install. Daily videos on autopilot. You approve every upload.</p>
+  <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+    <a href="https://github.com/sachiii143/apex-youtube-agent" class="btn-primary">⬇ Download on GitHub</a>
+    <a href="SETUP.md" class="btn-secondary">📖 Full Setup Guide</a>
+  </div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">⚡ APEX</div>
+  <p style="margin-bottom:6px">AI YouTube Content Agent · 29 Python files · 79 API routes · 20/20 tests</p>
+  <p style="margin-bottom:10px">MIT License · Original characters (Trishul, Sandy, Libhu) owned by <strong style="color:#e8f4ff">Sachin.M</strong></p>
+  <p style="font-size:14px;color:#4a7a9b;margin-bottom:4px">Built with ❤️ by</p>
+  <p style="font-size:20px;font-weight:800;background:linear-gradient(135deg,#00d4ff,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px">Sachin.M</p>
+  <p><a href="https://github.com/sachiii143/apex-youtube-agent">GitHub</a> · <a href="SETUP.md">Setup Guide</a> · <a href="CONTRIBUTING.md">Contributing</a></p>
+</footer>
+
+</body>
+</html>
